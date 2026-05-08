@@ -1,0 +1,45 @@
+services:
+  dbalpha:
+    image: postgres:18.3
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      db_network:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "15432:5432"
+      - "5432"
+    volumes:
+      - dbalpha_data:/var/lib/postgresql/
+      - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+
+  dbbeta:
+    image: postgres:18.3
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      db_network:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "15433:5432"
+      - "5432"
+    volumes:
+      - dbbeta_data:/var/lib/postgresql/
+      - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+
+networks:
+  db_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  dbalpha_data:
+  dbbeta_data:
