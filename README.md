@@ -4,8 +4,8 @@ Some code to test replication between two PostgreSQL instances running in Docker
 
 ## Setup
 
-- Run the two PostgreSQL services (`dbalpha` and `dbbeta`) using the provided `docker-compose.yaml` file with `docker-compose up`.
-- The `docker-compose.yaml` mounts the `postgresql.conf` and `pg_hba.conf` files into the containers. In particular the `pg_hba.conf` file is configured to allow replication connections from the container network and passwordless authentication for simplicity. The DB user is `postgres`.
+- Run the two PostgreSQL services (`dbalpha` and `dbbeta`) using the provided `compose.yaml` file with `podman compose up`.
+- The `compose.yaml` mounts the `postgresql.conf` and `pg_hba.conf` files into the containers. In particular the `pg_hba.conf` file is configured to allow replication connections from the container network and passwordless authentication for simplicity. The DB user is `postgres`.
 - Run `scripts/setup_replication.sh` to create a simple `mytable` table in both servers and set up replication.
 
 ## Connecting to the databases
